@@ -38,12 +38,13 @@ namespace Kawanoikioi
             routes.Ignore("{resource}.axd/{*pathinfo}");
             routes.Ignore("{service}.svc/{*pathinfo}");
 
+            routes.Add("FileRoute", new Route("Files/{uploader}/{type}/{*fileName}", new Handlers.Routes()));
+
             routes.MapPageRoute("ProfileRoute", "Users/{id}", "~/Account/Profile.aspx");
             routes.MapPageRoute("ForumRoute", "Forum/{action}/{*id}", "~/Forum/{action}.aspx", true, new RouteValueDictionary
             {
                 { "action", "Default" }
             });
-            routes.MapPageRoute("FilesRoute", "Files/{type}/{uploader}/{filename}", "~/Handlers/{type}.ashx");
             routes.MapPageRoute("MediaRoute", "{media}/{action}/{*id}", "~/Media/{media}/{action}.aspx", true, new RouteValueDictionary
             {
                 { "action", "Default" }

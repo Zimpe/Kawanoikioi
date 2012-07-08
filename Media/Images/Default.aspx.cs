@@ -34,7 +34,7 @@ namespace Kawanoikioi.Media.Images
                 FileNameLabel.Text = img.FileName;
             }
             FileNameLabel.ToolTip = img.FileName;
-            ShowImage.ImageUrl = "~/Media/Images/Show.ashx?Uploader=" + img.Uploader + "&FileName=" + img.FileName;
+            ShowImage.ImageUrl = string.Format("~/Files/{0}/Images/{1}", img.Uploader, img.FileName);
             ShowImage.Width = 100;
             ShowImage.Height = 100;
             ShowImage.AlternateText = img.FileName;            

@@ -35,8 +35,8 @@ namespace Kawanoikioi.Account
                 IsOnlineLabel.Text = "Online";
                 IsOnlineLabel.ForeColor = System.Drawing.Color.Green;
             }
-            CreationDateLabel.Text = currentUser.CreationDate;
-            LastActivityLabel.Text = currentUser.LastActivityDate;
+            CreationDateLabel.Text = currentUser.CreationDate.ToString();
+            LastActivityLabel.Text = currentUser.LastActivityDate.ToString();
         }
 
         protected void OpenForumPaneButton_Click(object sender, EventArgs e)

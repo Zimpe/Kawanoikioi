@@ -14,6 +14,11 @@ namespace Kawanoikioi.Handlers
     {
         private KawanoikioiDbContext _cont = new KawanoikioiDbContext();
 
+        public Images(HttpContext context)
+        {
+            ProcessRequest(context);
+        }
+
         public void ProcessRequest(HttpContext context)
         {
             string uploader = context.Request.RequestContext.RouteData.Values["uploader"].ToString();

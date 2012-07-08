@@ -231,6 +231,7 @@
     <Compile Include="Handlers\Images.ashx.cs">
       <DependentUpon>Images.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\Routes.cs" />
     <Compile Include="Models\Errors.cs" />
     <Compile Include="Models\KawanoikioiDbInit.cs" />
     <Compile Include="Default.aspx.cs">
