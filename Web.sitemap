@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="/" title="Home"  description="">
+        <siteMapNode url="" title="Community"  description="">
+            <siteMapNode url="/Forum" title="Forum" description="" />
+            <siteMapNode url="/Chat" title="Chat" description="" />
+        </siteMapNode>
+        <siteMapNode url="" title="Media"  description="">
+            <siteMapNode url="/Articles" title="Articles" description="">
+                <siteMapNode url="/Articles/Add" title="Write" />
+            </siteMapNode>
+            <siteMapNode url="/Images" title="Images" description="">
+                <siteMapNode url="/Images/Upload" title="Upload" description="" />
+            </siteMapNode>
+        </siteMapNode>
+    </siteMapNode>
+    </siteMap>
