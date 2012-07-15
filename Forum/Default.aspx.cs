@@ -22,7 +22,7 @@ namespace Kawanoikioi.Forum
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                ForumCategories category = (ForumCategories)e.Item.DataItem;
+                ForumCategory category = (ForumCategory)e.Item.DataItem;
                 Label CategoryHeaderLabel = (Label)e.Item.FindControl("CategoryHeaderLabel");
                 CategoryHeaderLabel.Text = category.Name;
                 GridView CategoryGridView = (GridView)e.Item.FindControl("CategoryGridView");
@@ -36,7 +36,7 @@ namespace Kawanoikioi.Forum
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 HyperLink ForumLink = (HyperLink)e.Row.Cells[1].FindControl("ForumLink");
-                Forums currentForum = (Forums)e.Row.DataItem;
+                Forum currentForum = (Forum)e.Row.DataItem;
                 ForumLink.NavigateUrl = Page.GetRouteUrl("ForumRoute", new RouteValueDictionary
                 {
                     { "action", "ShowForum" },

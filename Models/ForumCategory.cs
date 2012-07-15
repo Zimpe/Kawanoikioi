@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kawanoikioi.Models
 {
-    public class ForumCategories
+    public class ForumCategory
     {
         public int ID { get; set; }
         [Required]

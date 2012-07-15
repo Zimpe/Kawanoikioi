@@ -11,7 +11,7 @@ namespace Kawanoikioi.Models
     {
         protected override void Seed(KawanoikioiDbContext context)
         {
-            Articles art = new Articles
+            Article art = new Article
             {
                 ID = 1,
                 Author = "System",
@@ -24,7 +24,7 @@ namespace Kawanoikioi.Models
             };
             context.Articles.Add(art);
 
-            ForumCategories category = new ForumCategories
+            ForumCategory category = new ForumCategory
             {
                 ID = 1,
                 Name = "First Category (Please rename this category)",
@@ -32,7 +32,7 @@ namespace Kawanoikioi.Models
             };
             context.ForumCategories.Add(category);
 
-            ForumMessages forumMsg = new ForumMessages
+            ForumMessage forumMsg = new ForumMessage
             {
                 ID = 1,
                 Name = "Welcome to your Kawanoikioi Forum.",
@@ -47,7 +47,7 @@ namespace Kawanoikioi.Models
             };
             context.ForumMessages.Add(forumMsg);
 
-            Forums forum = new Forums
+            Forum forum = new Forum
             {
                 ID = 1,
                 CategoryID = 1,

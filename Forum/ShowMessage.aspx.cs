@@ -12,7 +12,7 @@ namespace Kawanoikioi.Forum
     public partial class ShowMessage : System.Web.UI.Page
     {
         private KawanoikioiDbRepository _repository = new KawanoikioiDbRepository();
-        private ForumMessages originalMessage = new ForumMessages();
+        private ForumMessage originalMessage = new ForumMessage();
 
         protected void Page_Load(object sender, EventArgs e)
         {

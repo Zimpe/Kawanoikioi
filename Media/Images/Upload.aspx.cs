@@ -30,7 +30,7 @@ namespace Kawanoikioi.Media.Images
                 {
                     try
                     {
-                        Kawanoikioi.Models.Images img = new Kawanoikioi.Models.Images();
+                        Kawanoikioi.Models.Image img = new Kawanoikioi.Models.Image();
                         img.FileName = _unique.GetName(_stringSanitizer.MakeUrlFriendly(ImageUpload.FileName, true), "Images");
                         img.FileData = ImageUpload.FileBytes;
                         img.MimeType = ImageUpload.PostedFile.ContentType;

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kawanoikioi.Models
 {
-    public class ChatRooms
+    public class ChatRoom
     {
         public int ID { get; set; }
         [Required]

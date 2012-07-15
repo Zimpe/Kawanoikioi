@@ -14,17 +14,17 @@ namespace Kawanoikioi.Models
         private Strings _stringsSanitizer = new Strings();
         private bool result = true;
 
-        public List<Articles> GetArticles()
+        public List<Article> GetArticles()
         {
             return _context.Articles.Where(a => a.IsPublished == true).ToList();
         }
 
-        public List<Articles> GetArticles(string author)
+        public List<Article> GetArticles(string author)
         {
             return _context.Articles.Where(a => a.Author == author).ToList();
         }
 
-        public Articles GetArticle(string uniqueName)
+        public Article GetArticle(string uniqueName)
         {
             return _context.Articles.Where(a => a.UniqueName == uniqueName & a.IsPublished == true).SingleOrDefault();
         }
@@ -33,7 +33,7 @@ namespace Kawanoikioi.Models
         {
             try
             {
-                Articles a = new Articles();
+                Article a = new Article();
 
                 a.Author = author;
                 a.Content = content;
@@ -53,32 +53,32 @@ namespace Kawanoikioi.Models
             return result;
         }
 
-        public List<ForumCategories> GetForumCategories()
+        public List<ForumCategory> GetForumCategories()
         {
             return _context.ForumCategories.OrderBy(f => f.OrderID).ToList();
         }
 
-        public List<Forums> GetForums(int categoryID)
+        public List<Forum> GetForums(int categoryID)
         {
             return _context.Forums.Where(f => f.CategoryID == categoryID).OrderBy(f => f.OrderID).ToList();
         }
 
-        public List<ForumMessages> GetForumMessages(string uniqueName)
+        public List<ForumMessage> GetForumMessages(string uniqueName)
         {
             return _context.ForumMessages.Where(f => f.ForumID == uniqueName & f.IsReply == false).ToList();
         }
 
-        public List<ForumMessages> GetForumMessagesByUser(string author)
+        public List<ForumMessage> GetForumMessagesByUser(string author)
         {
             return _context.ForumMessages.Where(f => f.Author == author & f.IsReply == false).ToList();
         }
 
-        public ForumMessages GetForumMessage(string uniqueName)
+        public ForumMessage GetForumMessage(string uniqueName)
         {
             return _context.ForumMessages.Where(f => f.UniqueName == uniqueName & f.IsReply == false).SingleOrDefault();
         }
 
-        public List<ForumMessages> GetForumReplies(string uniqueName)
+        public List<ForumMessage> GetForumReplies(string uniqueName)
         {
             return _context.ForumMessages.Where(f => f.UniqueName == uniqueName & f.IsReply == true).ToList();
         }
@@ -87,7 +87,7 @@ namespace Kawanoikioi.Models
         {
             try
             {
-                ForumMessages forumMessage = new ForumMessages();
+                ForumMessage forumMessage = new ForumMessage();
 
                 forumMessage.Author = author;
                 forumMessage.Content = content;
@@ -110,24 +110,24 @@ namespace Kawanoikioi.Models
             return result;
         }
 
-        public List<Images> GetImages()
+        public List<Image> GetImages()
         {
             return _context.Images.ToList();
         }
 
-        public List<Images> GetImages(string uploader)
+        public List<Image> GetImages(string uploader)
         {
             return _context.Images.Where(i => i.Uploader == uploader).ToList();
         }
 
-        public List<ChatRooms> GetChatRooms()
+        public List<ChatRoom> GetChatRooms()
         {
             return _context.ChatRooms.ToList();
         }
 
         public void AddChatRoom(string name, string topic = null)
         {
-            ChatRooms r = new ChatRooms
+            ChatRoom r = new ChatRoom
             {
                 Name = name,
                 Topic = topic
@@ -136,14 +136,14 @@ namespace Kawanoikioi.Models
             _context.SaveChanges();
         }
 
-        public List<ChatMessages> GetChatMessages(int id)
+        public List<ChatMessage> GetChatMessages(int id)
         {
             return _context.ChatMessages.Where(c => c.ChatRoomID == id).ToList();
         }
 
         public void AddChatMessage(string author, string message, int chatRoomID)
         {
-            ChatMessages m = new ChatMessages
+            ChatMessage m = new ChatMessage
             {
                 ChatRoomID = chatRoomID,
                 AuthorID = author,

@@ -24,7 +24,7 @@ namespace Kawanoikioi.Sanitizers
                 {
                     stringFrags[currentChar] = '-';
                 }
-                if (char.IsLower(stringFrags[currentChar]) && currentChar == 0)
+                if (char.IsLower(stringFrags[currentChar]) & currentChar == 0)
                 {
                     stringFrags[currentChar] = char.ToUpper(stringFrags[currentChar]);
                 }

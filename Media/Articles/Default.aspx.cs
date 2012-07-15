@@ -20,7 +20,7 @@ namespace Kawanoikioi.Media.Articles
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 HyperLink articleLink = (HyperLink)e.Row.Cells[1].FindControl("ArticleLink");
-                Kawanoikioi.Models.Articles art = (Kawanoikioi.Models.Articles)e.Row.DataItem;
+                Kawanoikioi.Models.Article art = (Kawanoikioi.Models.Article)e.Row.DataItem;
                 articleLink.NavigateUrl = Page.GetRouteUrl("MediaRoute", new RouteValueDictionary
                 {
                     { "media", "Articles" },

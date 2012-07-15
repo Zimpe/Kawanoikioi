@@ -35,7 +35,7 @@ namespace Kawanoikioi.Models
 
             if (type == "Articles")
             {
-                List<Articles> articles = (from a in _context.Articles
+                List<Article> articles = (from a in _context.Articles
                                            where a.UniqueName == name
                                            select a).ToList();
                 if (articles.Count != 0)
@@ -46,7 +46,7 @@ namespace Kawanoikioi.Models
 
             if (type == "Forums")
             {
-                List<Forums> forums = (from f in _context.Forums
+                List<Forum> forums = (from f in _context.Forums
                                        where f.UniqueName == name
                                        select f).ToList();
                 if (forums.Count != 0)
@@ -57,7 +57,7 @@ namespace Kawanoikioi.Models
 
             if (type == "ForumMessages")
             {
-                List<ForumMessages> forumMessages = (from f in _context.ForumMessages
+                List<ForumMessage> forumMessages = (from f in _context.ForumMessages
                                                      where f.UniqueName == name
                                                      select f).ToList();
                 if (forumMessages.Count != 0)
@@ -68,7 +68,7 @@ namespace Kawanoikioi.Models
 
             if (type == "Images")
             {
-                List<Images> img = (from i in _context.Images
+                List<Image> img = (from i in _context.Images
                                     where i.FileName == name
                                     select i).ToList();
                 if (img.Count != 0)

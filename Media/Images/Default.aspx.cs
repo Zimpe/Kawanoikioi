@@ -22,7 +22,7 @@ namespace Kawanoikioi.Media.Images
             Image ShowImage = (Image)ImagePanel.FindControl("ShowImage");
             Label UploaderLabel = (Label)ImagePanel.FindControl("UploaderLabel");
             Label SubmissionDate = (Label)ImagePanel.FindControl("SubmissionDateLabel");
-            Models.Images img = (Models.Images)e.Item.DataItem;
+            Models.Image img = (Models.Image)e.Item.DataItem;
 
             if (img.FileName.Length >= 13)
             {

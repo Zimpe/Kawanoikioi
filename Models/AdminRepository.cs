@@ -13,7 +13,7 @@ namespace Kawanoikioi.Models
         private Strings _stringSanitizer = new Strings();
         private bool result;
 
-        public List<Articles> GetAllArticles()
+        public List<Article> GetAllArticles()
         {
             return _context.Articles.ToList();
         }
@@ -28,12 +28,12 @@ namespace Kawanoikioi.Models
             return _context.Errors.Where(e => e.ID == id).SingleOrDefault();
         }
 
-        public List<Forums> GetForums()
+        public List<Forum> GetForums()
         {
             return _context.Forums.ToList();
         }
 
-        public void UpdateArticle(Articles art)
+        public void UpdateArticle(Article art)
         {
             throw new NotImplementedException();
         }
@@ -48,7 +48,7 @@ namespace Kawanoikioi.Models
                 {
                     orderID = _context.Forums.LastOrDefault().OrderID + 1;
                 }
-                Forums forum = new Forums();
+                Forum forum = new Forum();
                 forum.CategoryID = categoryID;
                 forum.Description = description;
                 forum.Name = name;
@@ -65,7 +65,7 @@ namespace Kawanoikioi.Models
             return result;
         }
 
-        public void UpdateForum(Forums f)
+        public void UpdateForum(Forum f)
         {
             throw new NotImplementedException();
         }
@@ -77,14 +77,14 @@ namespace Kawanoikioi.Models
                 orderID = _context.ForumCategories.LastOrDefault().OrderID + 1;
             }
 
-            ForumCategories forumCat = new ForumCategories();
+            ForumCategory forumCat = new ForumCategory();
             forumCat.Name = name;
             forumCat.OrderID = orderID;
             _context.ForumCategories.Add(forumCat);
             _context.SaveChanges();
         }
 
-        public void UpdateForumCategory(ForumCategories fc)
+        public void UpdateForumCategory(ForumCategory fc)
         {
             throw new NotImplementedException();
         }
