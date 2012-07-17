@@ -36,7 +36,7 @@ namespace Kawanoikioi.Forum
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 HyperLink ForumLink = (HyperLink)e.Row.Cells[1].FindControl("ForumLink");
-                Forum currentForum = (Forum)e.Row.DataItem;
+                Models.Forum currentForum = (Models.Forum)e.Row.DataItem;
                 ForumLink.NavigateUrl = Page.GetRouteUrl("ForumRoute", new RouteValueDictionary
                 {
                     { "action", "ShowForum" },

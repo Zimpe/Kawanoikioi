@@ -6,10 +6,9 @@ using System.Web.UI.WebControls;
 
 namespace Kawanoikioi.Sanitizers
 {
-    public class Strings
+    public static class Strings
     {
-
-        public string MakeUrlFriendly(string str, bool ignorePunctiontion = false)
+        public static string MakeUrlFriendly(string str, bool ignorePunctiontion = false)
         {
             char[] stringFrags = str.ToCharArray();
             int currentChar = 0;
@@ -35,7 +34,7 @@ namespace Kawanoikioi.Sanitizers
             return new string(stringFrags);
         }
 
-        //public string CreateLinksFromUrl(string text, bool useAspNetControls = true)
+        //public static string CreateLinksFromUrl(string text, bool useAspNetControls = true)
         //{
         //    string[] words = new string[1000];
         //    char[] characters = text.ToCharArray();

@@ -33,7 +33,7 @@ namespace Kawanoikioi.Forum
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 HyperLink MessageLink = (HyperLink)e.Row.FindControl("MessageLink");
-                ForumMessages message = (ForumMessages)e.Row.DataItem;
+                ForumMessage message = (ForumMessage)e.Row.DataItem;
                 MessageLink.NavigateUrl = Page.GetRouteUrl("ForumRoute", new RouteValueDictionary
                 {
                     { "action", "ShowMessage" },

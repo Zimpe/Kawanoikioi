@@ -13,8 +13,7 @@ namespace Kawanoikioi.Media.Images
     public partial class Upload : System.Web.UI.Page
     {
         private Check check = new Check();
-        private KawanoikioiDbContext _context = new KawanoikioiDbContext();
-        private Strings _stringSanitizer = new Strings();
+        private KawanoikioiDbRepository _rep = new KawanoikioiDbRepository();
         private UniqueChecker _unique = new UniqueChecker();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,15 +29,16 @@ namespace Kawanoikioi.Media.Images
                 {
                     try
                     {
-                        Kawanoikioi.Models.Image img = new Kawanoikioi.Models.Image();
-                        img.FileName = _unique.GetName(_stringSanitizer.MakeUrlFriendly(ImageUpload.FileName, true), "Images");
-                        img.FileData = ImageUpload.FileBytes;
-                        img.MimeType = ImageUpload.PostedFile.ContentType;
-                        img.SubmissionDate = DateTime.Now;
-                        img.Uploader = HttpContext.Current.User.Identity.Name;
+                        Kawanoikioi.Models.Image img = new Kawanoikioi.Models.Image
+                        {
+                            FileName = _unique.GetName(Strings.MakeUrlFriendly(ImageUpload.FileName, true), "Images"),
+                            FileData = ImageUpload.FileBytes,
+                            MimeType = ImageUpload.PostedFile.ContentType,
+                            SubmissionDate = DateTime.Now,
+                            Uploader = HttpContext.Current.User.Identity.Name
+                        };
 
-                        _context.Images.Add(img);
-                        _context.SaveChanges();
+                        _rep.AddImage(img);
                     }
                     catch
                     {

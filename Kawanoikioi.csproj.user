@@ -20,6 +20,9 @@
           </StartWorkingDirectory>
           <EnableENC>False</EnableENC>
           <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
+          <ProjectOutputReferences>
+            <Ref Project="{BDBF4D9A-7DF7-43C5-9B8F-5DAD3F01670A}" Folder="ClientBin">Kawanoikioi.Video.xap</Ref>
+          </ProjectOutputReferences>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

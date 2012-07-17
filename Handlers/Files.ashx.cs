@@ -49,7 +49,7 @@ namespace Kawanoikioi.Handlers
             Video vid = _context.Videos.Where(v => v.Uploader == uploader & v.FileName == filename).SingleOrDefault();
             if (vid != null)
             {
-                http.Response.ContentType = vid.MimeType;
+                http.Response.ContentType = null;
                 http.Response.OutputStream.Write(vid.FileData, 0, vid.FileData.Length);
             }
         }

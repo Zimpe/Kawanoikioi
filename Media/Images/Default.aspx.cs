@@ -19,7 +19,7 @@ namespace Kawanoikioi.Media.Images
         {
             Panel ImagePanel = (Panel)e.Item.FindControl("ImagePanel");
             Label FileNameLabel = (Label)ImagePanel.FindControl("FileNameLabel");
-            Image ShowImage = (Image)ImagePanel.FindControl("ShowImage");
+            System.Web.UI.WebControls.Image ShowImage = (System.Web.UI.WebControls.Image)ImagePanel.FindControl("ShowImage");
             Label UploaderLabel = (Label)ImagePanel.FindControl("UploaderLabel");
             Label SubmissionDate = (Label)ImagePanel.FindControl("SubmissionDateLabel");
             Models.Image img = (Models.Image)e.Item.DataItem;

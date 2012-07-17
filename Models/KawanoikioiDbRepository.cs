@@ -9,11 +9,14 @@ namespace Kawanoikioi.Models
 {
     public partial class KawanoikioiDbRepository
     {
+        #region Private Variables Definition
         private KawanoikioiDbContext _context = new KawanoikioiDbContext();
         private UniqueChecker _unique = new UniqueChecker();
-        private Strings _stringsSanitizer = new Strings();
         private bool result = true;
+        #endregion
 
+        #region Media
+        #region Articles
         public List<Article> GetArticles()
         {
             return _context.Articles.Where(a => a.IsPublished == true).ToList();
@@ -39,7 +42,7 @@ namespace Kawanoikioi.Models
                 a.Content = content;
                 a.IsPublished = isPublished;
                 a.Name = name;
-                a.UniqueName = _unique.GetName(_stringsSanitizer.MakeUrlFriendly(name), "Articles");
+                a.UniqueName = _unique.GetName(Strings.MakeUrlFriendly(name), "Articles");
                 a.SubmissionDate = DateTime.Now;
                 a.LastModified = DateTime.Now;
 
@@ -52,7 +55,51 @@ namespace Kawanoikioi.Models
             }
             return result;
         }
+        #endregion
 
+        #region Images
+        public List<Image> GetImages()
+        {
+            return _context.Images.ToList();
+        }
+
+        public List<Image> GetImages(string uploader)
+        {
+            return _context.Images.Where(i => i.Uploader == uploader).ToList();
+        }
+
+        public void AddImage(Image img)
+        {
+            _context.Images.Add(img);
+            _context.SaveChanges();
+        }
+        #endregion
+
+        #region Videos
+        public List<Video> GetVideos()
+        {
+            return _context.Videos.ToList();
+        }
+
+        public List<Video> GetVideos(string uploader)
+        {
+            return _context.Videos.Where(v => v.Uploader == uploader).ToList();
+        }
+
+        public Video GetVideo(string uploader, string filename)
+        {
+            return _context.Videos.Where(v => v.Uploader == uploader & v.FileName == filename).SingleOrDefault();
+        }
+        public void AddVideo(Video v)
+        {
+            _context.Videos.Add(v);
+            _context.SaveChanges();
+        }
+        #endregion
+        #endregion
+
+        #region Community
+        #region Forum
         public List<ForumCategory> GetForumCategories()
         {
             return _context.ForumCategories.OrderBy(f => f.OrderID).ToList();
@@ -97,7 +144,7 @@ namespace Kawanoikioi.Models
                 forumMessage.SubmissionDate = DateTime.Now;
                 forumMessage.LastModified = DateTime.Now;
                 forumMessage.Name = name;
-                forumMessage.UniqueName = _unique.GetName(_stringsSanitizer.MakeUrlFriendly(name), "ForumMessages");
+                forumMessage.UniqueName = _unique.GetName(Strings.MakeUrlFriendly(name), "ForumMessages");
 
                 _context.ForumMessages.Add(forumMessage);
                 _context.SaveChanges();
@@ -109,49 +156,7 @@ namespace Kawanoikioi.Models
 
             return result;
         }
-
-        public List<Image> GetImages()
-        {
-            return _context.Images.ToList();
-        }
-
-        public List<Image> GetImages(string uploader)
-        {
-            return _context.Images.Where(i => i.Uploader == uploader).ToList();
-        }
-
-        public List<ChatRoom> GetChatRooms()
-        {
-            return _context.ChatRooms.ToList();
-        }
-
-        public void AddChatRoom(string name, string topic = null)
-        {
-            ChatRoom r = new ChatRoom
-            {
-                Name = name,
-                Topic = topic
-            };
-            _context.ChatRooms.Add(r);
-            _context.SaveChanges();
-        }
-
-        public List<ChatMessage> GetChatMessages(int id)
-        {
-            return _context.ChatMessages.Where(c => c.ChatRoomID == id).ToList();
-        }
-
-        public void AddChatMessage(string author, string message, int chatRoomID)
-        {
-            ChatMessage m = new ChatMessage
-            {
-                ChatRoomID = chatRoomID,
-                AuthorID = author,
-                Message = message,
-                SubmissionDate = DateTime.Now
-            };
-            _context.ChatMessages.Add(m);
-            _context.SaveChanges();
-        }
+        #endregion
+        #endregion
     }
 }

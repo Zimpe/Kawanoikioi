@@ -14,7 +14,8 @@ namespace Kawanoikioi.Models
         [Required]
         public byte[] FileData { get; set; }
         [Required]
-        public string MimeType { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         [Required]
         public string Uploader { get; set; }
         [Required]

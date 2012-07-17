@@ -15,6 +15,11 @@ Default skin template. The following skins are provided as examples only.
 --%>
 <asp:Label runat="server" SkinID="PageHeaderLabel" Font-Size="20px" Font-Bold="true" ForeColor="DarkBlue" />
 
+<asp:Label SkinID="ErrorLabel" runat="server" BackColor="#FFFF99" 
+    BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="1px" ForeColor="Red" />
+
+<asp:Label SkinID="ExplanationLabel" runat="server" ForeColor="Gray" Font-Italic="true" Font-Size="16px" />
+
 <asp:GridView runat="server" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None"
     BorderWidth="1px" CellPadding="3">
     <FooterStyle BackColor="White" ForeColor="#000066" />
@@ -30,7 +35,4 @@ Default skin template. The following skins are provided as examples only.
 </asp:GridView>
 
 <asp:RequiredFieldValidator runat="server" BackColor="#FFFF99" 
-    BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="1px" ForeColor="Red" />
-
-<asp:Label SkinID="ErrorLabel" runat="server" BackColor="#FFFF99" 
     BorderColor="#CC0000" BorderStyle="Solid" BorderWidth="1px" ForeColor="Red" />

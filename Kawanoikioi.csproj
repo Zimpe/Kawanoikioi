@@ -14,8 +14,7 @@
     <AssemblyName>Kawanoikioi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
-    <SilverlightApplicationList>
-    </SilverlightApplicationList>
+    <SilverlightApplicationList>{BDBF4D9A-7DF7-43C5-9B8F-5DAD3F01670A}|..\Kawanoikioi.Video\Kawanoikioi.Video.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +68,10 @@
       <HintPath>..\packages\AjaxControlToolkit.4.1.51116\lib\40\SanitizerProviders\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Api2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Types, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Utilities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.ServiceModel.DomainServices.EntityFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\RIAServices.EntityFramework.4.1.60730.0\lib\Net40\Microsoft.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
     </Reference>
@@ -107,6 +110,7 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
@@ -121,6 +125,7 @@
     <Content Include="Chat\ChatRoom.aspx" />
     <Content Include="Chat\Default.aspx" />
     <Content Include="ClientBin\Kawanoikioi.Chat.xap" />
+    <Content Include="ClientBin\Kawanoikioi.Video.xap" />
     <Content Include="Forum\Default.aspx" />
     <Content Include="Forum\ShowForum.aspx" />
     <Content Include="Forum\ShowMessage.aspx" />
@@ -133,6 +138,7 @@
     <Content Include="App_Themes\Default\Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Media\Videos\Upload.aspx" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
@@ -232,6 +238,13 @@
       <DependentUpon>Files.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Routes.cs" />
+    <Compile Include="Media\Videos\Upload.aspx.cs">
+      <DependentUpon>Upload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Media\Videos\Upload.aspx.designer.cs">
+      <DependentUpon>Upload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Errors.cs" />
     <Compile Include="Models\KawanoikioiDbInit.cs" />
     <Compile Include="Default.aspx.cs">
@@ -338,6 +351,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Temp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
@@ -362,6 +376,7 @@
     <Content Include="App_Themes\Default\Forum.skin" />
     <Content Include="packages.config" />
     <Content Include="Handlers\Files.ashx" />
+    <Content Include="Media\Videos\Web.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

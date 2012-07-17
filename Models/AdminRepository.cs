@@ -10,7 +10,6 @@ namespace Kawanoikioi.Models
     {
         private KawanoikioiDbContext _context = new KawanoikioiDbContext();
         private UniqueChecker _unique = new UniqueChecker();
-        private Strings _stringSanitizer = new Strings();
         private bool result;
 
         public List<Article> GetAllArticles()
@@ -48,14 +47,16 @@ namespace Kawanoikioi.Models
                 {
                     orderID = _context.Forums.LastOrDefault().OrderID + 1;
                 }
-                Forum forum = new Forum();
-                forum.CategoryID = categoryID;
-                forum.Description = description;
-                forum.Name = name;
-                forum.UniqueName = _unique.GetName(_stringSanitizer.MakeUrlFriendly(name), "Forums");
-                forum.OrderID = orderID;
+                Forum f = new Forum
+                {
+                    CategoryID = categoryID,
+                    Description = description,
+                    Name = name,
+                    UniqueName = _unique.GetName(Strings.MakeUrlFriendly(name), "Forums"),
+                    OrderID = orderID
+                };
 
-                _context.Forums.Add(forum);
+                _context.Forums.Add(f);
                 _context.SaveChanges();
             }
             catch
@@ -77,9 +78,11 @@ namespace Kawanoikioi.Models
                 orderID = _context.ForumCategories.LastOrDefault().OrderID + 1;
             }
 
-            ForumCategory forumCat = new ForumCategory();
-            forumCat.Name = name;
-            forumCat.OrderID = orderID;
+            ForumCategory forumCat = new ForumCategory
+            {
+                Name = name,
+                OrderID = orderID
+            };
             _context.ForumCategories.Add(forumCat);
             _context.SaveChanges();
         }
