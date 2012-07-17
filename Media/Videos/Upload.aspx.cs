@@ -17,7 +17,7 @@ namespace Kawanoikioi.Media.Videos
     {
         private KawanoikioiDbRepository _rep = new KawanoikioiDbRepository();
         private DirectoryInfo tempDir = new DirectoryInfo(HttpContext.Current.Server.MapPath(string.Format("~/Temp/{0}/Videos", HttpContext.Current.User.Identity.Name)));
-        private FileInfo encodedFile;
+        private List<FileInfo> encodedFiles = new List<FileInfo>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,12 +28,12 @@ namespace Kawanoikioi.Media.Videos
         {
             if (VideoFileUpload.HasFile & VideoFileUpload.PostedFile != null)
             {
+                string[] fileNameFrags = VideoFileUpload.FileName.Split('.');
                 if (!tempDir.Exists)
                 {
                     tempDir.Create();
                 }
                 VideoFileUpload.PostedFile.SaveAs(string.Format("{0}\\{1}", tempDir.FullName, VideoFileUpload.FileName));
-                Encode(string.Format("{0}\\{1}", tempDir, VideoFileUpload.FileName), VideoFileUpload.FileName);
                 Video v = new Video
                 {
                     FileName = new UniqueChecker().GetName(Strings.MakeUrlFriendly(VideoFileUpload.FileName), "Videos"),
@@ -46,30 +46,31 @@ namespace Kawanoikioi.Media.Videos
                 }
                 else
                 {
-                    string[] fileNameFrags = TitleTextBox.Text.Split('.');
                     v.Title = fileNameFrags[0];
                 }
                 if (DescriptionTextBox.Text != null)
                 {
                     v.Description = DescriptionTextBox.Text;
                 }
-                encodedFile.Open(FileMode.Open, FileAccess.Read, FileShare.Read).Read(v.FileData, 0, (int)encodedFile.Length);
-                tempDir.Delete();
+                Encode(string.Format("{0}\\{1}", tempDir.FullName, VideoFileUpload.FileName));
+                string compressedFilePath = Compress(string.Format("{0}_{1}", fileNameFrags[0], DateTime.Now.ToShortDateString()));
+                FileStream encodedFile = File.Open(compressedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                encodedFile.Read(v.FileData, 0, (int)encodedFile.Length);
+                Directory.Delete(HttpContext.Current.Server.MapPath(string.Format("~/Temp/{0}", HttpContext.Current.User.Identity.Name)), true);
                 _rep.AddVideo(v);
             }
         }
 
-        private void Encode(string tempPath, string fileName)
+        private void Encode(string tempPath)
         {
             Job job = new Job();
             try
             {
                 MediaItem item = new MediaItem(tempPath);
                 job.MediaItems.Add(item);
-                job.OutputDirectory = string.Format("{0}\\Output", tempDir.FullName);
-                job.CreateSubfolder = false;
+                job.ApplyPreset(Presets.VC1IISSmoothStreamingHD1080pVBR);
+                job.OutputDirectory = string.Format(tempDir.FullName);
                 job.Encode();
-                job.EncodeProgress += new EventHandler<EncodeProgressEventArgs>(job_EncodeProgress);
             }
             catch (EncodeErrorException ex)
             {
@@ -77,29 +78,28 @@ namespace Kawanoikioi.Media.Videos
             }
             finally
             {
-                Compress(new DirectoryInfo(job.ActualOutputDirectory));
-                File.Delete(tempPath);
-                encodedFile = new FileInfo(job.ActualOutputDirectory);
+                foreach (FileInfo fi in new DirectoryInfo(job.ActualOutputDirectory).GetFiles())
+                {
+                    encodedFiles.Add(fi);
+                }
                 job.CancelEncode();
                 job.Dispose();
+                File.Delete(tempPath);
             }
         }
 
-        private void Compress(DirectoryInfo directoryInfo)
+        private string Compress(string outputFilename)
         {
-            List<FileInfo> files = new List<FileInfo>(directoryInfo.GetFiles());
-            FileStream outFile = File.Create(string.Format("{0}\\CompressedTemp.gz", directoryInfo.FullName));
+            string outPath = string.Format("{0}\\{1}.gz", tempDir.FullName, outputFilename);
+            FileStream outFile = File.Create(outPath);
             GZipStream zipStream = new GZipStream(outFile, CompressionMode.Compress);
-            files.ForEach(f=>
+            encodedFiles.ForEach(f=>
             {
                 FileStream inFile = f.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
                 inFile.CopyTo(zipStream);
             });
-        }
 
-        void job_EncodeProgress(object sender, EncodeProgressEventArgs e)
-        {
-            ProgressLabel.Text = string.Format("Encoding Progress: {0}%", e.Progress);
+            return outPath;
         }
     }
 }
