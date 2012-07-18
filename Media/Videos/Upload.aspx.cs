@@ -34,30 +34,35 @@ namespace Kawanoikioi.Media.Videos
                     tempDir.Create();
                 }
                 VideoFileUpload.PostedFile.SaveAs(string.Format("{0}\\{1}", tempDir.FullName, VideoFileUpload.FileName));
-                Video v = new Video
-                {
-                    FileName = new UniqueChecker().GetName(Strings.MakeUrlFriendly(VideoFileUpload.FileName), "Videos"),
-                    SubmissionDate = DateTime.Now,
-                    Uploader = HttpContext.Current.User.Identity.Name
-                };
-                if (TitleTextBox.Text != null)
-                {
-                    v.Title = TitleTextBox.Text;
-                }
-                else
-                {
-                    v.Title = fileNameFrags[0];
-                }
-                if (DescriptionTextBox.Text != null)
-                {
-                    v.Description = DescriptionTextBox.Text;
-                }
                 Encode(string.Format("{0}\\{1}", tempDir.FullName, VideoFileUpload.FileName));
-                string compressedFilePath = Compress(string.Format("{0}_{1}", fileNameFrags[0], DateTime.Now.ToShortDateString()));
-                FileStream encodedFile = File.Open(compressedFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                encodedFile.Read(v.FileData, 0, (int)encodedFile.Length);
-                Directory.Delete(HttpContext.Current.Server.MapPath(string.Format("~/Temp/{0}", HttpContext.Current.User.Identity.Name)), true);
-                _rep.AddVideo(v);
+                Video v = new Video();
+                FileStream compressedFile = Compress(string.Format("{0}_{1}", fileNameFrags[0], DateTime.Now.ToShortDateString()));
+                try
+                {
+                    v.FileName = new UniqueChecker().GetName(Strings.MakeUrlFriendly(VideoFileUpload.FileName), "Videos");
+                    v.FileData = new byte[compressedFile.Length];
+                    v.SubmissionDate = DateTime.Now;
+                    v.Uploader = HttpContext.Current.User.Identity.Name;
+                    if (!string.IsNullOrEmpty(TitleTextBox.Text))
+                    {
+                        v.Title = TitleTextBox.Text;
+                    }
+                    else
+                    {
+                        v.Title = fileNameFrags[0];
+                    }
+                    if (!string.IsNullOrEmpty(DescriptionTextBox.Text))
+                    {
+                        v.Description = DescriptionTextBox.Text;
+                    }
+                    compressedFile.Read(v.FileData, 0, (int)compressedFile.Length);
+                }
+                finally
+                {
+                    compressedFile.Close();
+                    Directory.Delete(HttpContext.Current.Server.MapPath(string.Format("~/Temp/{0}", HttpContext.Current.User.Identity.Name)), true);
+                    _rep.AddVideo(v);
+                }
             }
         }
 
@@ -68,7 +73,7 @@ namespace Kawanoikioi.Media.Videos
             {
                 MediaItem item = new MediaItem(tempPath);
                 job.MediaItems.Add(item);
-                job.ApplyPreset(Presets.VC1IISSmoothStreamingHD1080pVBR);
+                job.ApplyPreset(Presets.VC1IISSmoothStreamingHD720pVBR);
                 job.OutputDirectory = string.Format(tempDir.FullName);
                 job.Encode();
             }
@@ -88,18 +93,18 @@ namespace Kawanoikioi.Media.Videos
             }
         }
 
-        private string Compress(string outputFilename)
+        private FileStream Compress(string outputFilename)
         {
             string outPath = string.Format("{0}\\{1}.gz", tempDir.FullName, outputFilename);
             FileStream outFile = File.Create(outPath);
             GZipStream zipStream = new GZipStream(outFile, CompressionMode.Compress);
-            encodedFiles.ForEach(f=>
+            encodedFiles.ForEach(f =>
             {
                 FileStream inFile = f.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
                 inFile.CopyTo(zipStream);
+                inFile.Close();
             });
-
-            return outPath;
+            return outFile;
         }
     }
 }
