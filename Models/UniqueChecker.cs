@@ -21,13 +21,24 @@ namespace Kawanoikioi.Models
         public string GetName(string name, string type)
         {
             string originalName = name;
-
             int tryNumber = 0;
             while (!IsUnique(name, type))
             {
                 name = originalName + tryNumber;
+                tryNumber++;
             }
+            return name;
+        }
 
+        public string GetFileName(string name, string type)
+        {
+            string[] originalName = name.Split('.');
+            int tryNumber = 0;
+            while (!IsUnique(name, type))
+            {
+                name = originalName[0] + tryNumber + originalName[1];
+                tryNumber++;
+            }
             return name;
         }
 

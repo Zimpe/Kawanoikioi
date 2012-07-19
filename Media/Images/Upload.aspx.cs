@@ -31,7 +31,7 @@ namespace Kawanoikioi.Media.Images
                     {
                         Kawanoikioi.Models.Image img = new Kawanoikioi.Models.Image
                         {
-                            FileName = _unique.GetName(Strings.MakeUrlFriendly(ImageUpload.FileName, true), "Images"),
+                            FileName = _unique.GetFileName(Strings.MakeUrlFriendly(ImageUpload.FileName, true), "Images"),
                             FileData = ImageUpload.FileBytes,
                             MimeType = ImageUpload.PostedFile.ContentType,
                             SubmissionDate = DateTime.Now,

@@ -26,7 +26,18 @@ namespace Kawanoikioi.Handlers
             string filename = route.Values["filename"].ToString();
             if (!string.IsNullOrEmpty(uploader) || !string.IsNullOrEmpty(filename))
             {
-                ProcessImage(context, uploader, filename);
+                if (route.Values["type"].ToString() == "Images")
+                {
+                    ProcessImage(context, uploader, filename);
+                }
+                if (route.Values["type"].ToString() == "Videos")
+                {
+                    ProcessVideo(context, uploader, filename);
+                }
+                else
+                {
+                    throw new NotImplementedException("The file type specified is not yet supported.");
+                }
             }
         }
 
@@ -49,7 +60,7 @@ namespace Kawanoikioi.Handlers
             Video vid = _context.Videos.Where(v => v.Uploader == uploader & v.FileName == filename).SingleOrDefault();
             if (vid != null)
             {
-                http.Response.ContentType = "application/octet-stream";
+                http.Response.ContentType = "application/gzip";
                 http.Response.OutputStream.Write(vid.FileData, 0, vid.FileData.Length);
             }
             else
