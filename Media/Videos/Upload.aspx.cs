@@ -5,11 +5,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.IO.Compression;
+using Microsoft.Expression.Encoder;
+using Microsoft.Expression.Encoder.Profiles;
 using Kawanoikioi.Models;
 using Kawanoikioi.Sanitizers;
-using Microsoft.Expression.Encoder;
-using System.IO.Compression;
-using Microsoft.Expression.Encoder.Profiles;
+using Ionic.Zip;
 
 namespace Kawanoikioi.Media.Videos
 {
@@ -78,29 +79,21 @@ namespace Kawanoikioi.Media.Videos
                 {
                     encodedFiles.Add(fi);
                 }
-                job.CancelEncode();
-                job.Dispose();
-                File.Delete(tempPath);
             }
         }
 
         private string Compress(string outputFilename)
         {
-            string outPath = string.Format("{0}\\{1}_{2}.gz", tempDir.FullName, outputFilename, Guid.NewGuid());
-            using (FileStream outFile = File.Create(outPath))
-            {
-                encodedFiles.ForEach(f =>
+            string outputPath = string.Format("{0}\\{1}_{2}.zip", tempDir.FullName, outputFilename, Guid.NewGuid());
+                using (ZipFile output = new ZipFile(outputPath))
                 {
-                    using (GZipStream zipStream = new GZipStream(outFile, CompressionMode.Compress))
+                    foreach (FileInfo input in encodedFiles)
                     {
-                        using (FileStream inFile = f.Open(FileMode.Open, FileAccess.Read, FileShare.Read))
-                        {
-                            inFile.CopyTo(zipStream);
-                        }
+                        output.AddEntry(input.Name, input.Open(FileMode.Open, FileAccess.Read, FileShare.Read));
                     }
-                });
-            }
-            return outPath;
+                    output.Save();
+                }
+            return outputPath;
         }
     }
 }

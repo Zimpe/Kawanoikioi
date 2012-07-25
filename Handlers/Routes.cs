@@ -12,9 +12,16 @@ namespace Kawanoikioi.Handlers
 
         public IHttpHandler GetHttpHandler(RequestContext request)
         {
-                if (request.RouteData.Values["fileName"] != null)
+                if (!string.IsNullOrEmpty(request.RouteData.Values["fileName"].ToString()))
                 {
-                    handler = new Files(HttpContext.Current);
+                    if (request.RouteData.Values["type"].ToString() == "Images")
+                    {
+                        handler = new Images();
+                    }
+                    if (request.RouteData.Values["type"].ToString() == "Videos")
+                    {
+                        handler = new SmoothStreaming();
+                    }
                 }
                 else
                 {

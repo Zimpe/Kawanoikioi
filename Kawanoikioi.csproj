@@ -67,6 +67,9 @@
     <Reference Include="HtmlSanitizationLibrary, Version=4.0.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
       <HintPath>..\packages\AjaxControlToolkit.4.1.51116\lib\40\SanitizerProviders\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\..\..\Desktop\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.Expression.Encoder.Api2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
@@ -234,10 +237,13 @@
     <Compile Include="Chat\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\Files.ashx.cs">
-      <DependentUpon>Files.ashx</DependentUpon>
+    <Compile Include="Handlers\Images.ashx.cs">
+      <DependentUpon>Images.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Routes.cs" />
+    <Compile Include="Handlers\SmoothStreaming.ashx.cs">
+      <DependentUpon>SmoothStreaming.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Media\Videos\Upload.aspx.cs">
       <DependentUpon>Upload.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -375,8 +381,9 @@
     <Content Include="App_Themes\Default\Images.skin" />
     <Content Include="App_Themes\Default\Forum.skin" />
     <Content Include="packages.config" />
-    <Content Include="Handlers\Files.ashx" />
+    <Content Include="Handlers\Images.ashx" />
     <Content Include="Media\Videos\Web.config" />
+    <Content Include="Handlers\SmoothStreaming.ashx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
